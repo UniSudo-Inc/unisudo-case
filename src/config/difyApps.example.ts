@@ -1,21 +1,21 @@
 /**
- * Dify 应用配置文件
+ * Dify 应用配置文件示例
  * 
- * 安全说明：
- * - 敏感的 URL 信息已移至环境变量中
- * - 开源时请使用 difyApps.example.ts 作为示例
+ * 安全部署说明：
+ * 1. 复制此文件为 difyApps.ts
+ * 2. 替换所有 URL 为真实的 Dify 应用地址
+ * 3. 确保 .env 文件中配置了正确的环境变量
  * 
  * 如何添加新的 Dify 应用：
- * 1. 在 .env 中添加新的环境变量
- * 2. 在 DIFY_APPS 数组中添加新的配置项
- * 3. 在 chatFlowData.ts 中添加对应的 ChatFlowItem
- * 4. 更新相关的类型定义
+ * 1. 在 DIFY_APPS 数组中添加新的配置项
+ * 2. 在 chatFlowData.ts 中添加对应的 ChatFlowItem
+ * 3. 在 .env 中添加对应的环境变量
  * 
  * 配置格式说明：
  * - id: 唯一标识符，用于匹配 ChatFlowItem 中的 difyType
  * - name: 显示名称
  * - description: 描述
- * - url: 从环境变量获取，保护敏感信息
+ * - url: 使用环境变量来保护敏感信息
  * - category: 所属分类 ('legal' | 'education' | 'hr' | 'programming')
  */
 
@@ -35,7 +35,7 @@ export const DIFY_APPS: DifyAppConfig[] = [
     id: 'contract',
     name: '合同审查助手',
     description: '智能分析合同条款，识别风险点',
-    url: import.meta.env.VITE_DIFY_CONTRACT_CHATBOT_URL || '',
+    url: import.meta.env.VITE_DIFY_CONTRACT_CHATBOT_URL || 'https://your-dify-domain.com/chatbot/YOUR_CONTRACT_ID',
     category: 'legal',
     icon: 'FileText',
     color: 'from-blue-500 to-blue-600',
@@ -45,7 +45,7 @@ export const DIFY_APPS: DifyAppConfig[] = [
     id: 'lesson',
     name: '教案生成助手', 
     description: '智能生成个性化教学方案',
-    url: import.meta.env.VITE_DIFY_LESSON_CHATBOT_URL || '',
+    url: import.meta.env.VITE_DIFY_LESSON_CHATBOT_URL || 'https://your-dify-domain.com/chatbot/YOUR_LESSON_ID',
     category: 'education',
     icon: 'GraduationCap',
     color: 'from-green-500 to-green-600',
@@ -55,7 +55,7 @@ export const DIFY_APPS: DifyAppConfig[] = [
     id: 'hr-new',
     name: 'HR智能客服',
     description: '24/7在线HR咨询服务',
-    url: import.meta.env.VITE_DIFY_HR_CHATBOT_URL || '',
+    url: import.meta.env.VITE_DIFY_HR_CHATBOT_URL || 'https://your-dify-domain.com/chatbot/YOUR_HR_ID',
     category: 'hr',
     icon: 'MessageCircle',
     color: 'from-purple-500 to-purple-600',
@@ -67,7 +67,7 @@ export const DIFY_APPS: DifyAppConfig[] = [
   //   id: 'new-app-id',
   //   name: '新应用名称',
   //   description: '应用描述',
-  //   url: import.meta.env.VITE_DIFY_NEW_APP_URL || '',
+  //   url: import.meta.env.VITE_DIFY_NEW_APP_URL || 'https://your-dify-domain.com/chatbot/YOUR_APP_ID',
   //   category: 'hr', // 或其他分类
   //   icon: 'YourIcon', // 确保在 iconMap 中有对应的图标
   //   color: 'from-your-color-500 to-your-color-600',

@@ -22,4 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment variables containing sensitive data
 .env
+.env.local
+.env.production
+.env.development
+
+# Backup of original config with sensitive URLs
+src/config/difyApps.backup.ts

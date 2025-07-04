@@ -1,8 +1,20 @@
 # Dify 应用接入指南
 
+## 📋 安全说明
+**重要**：为保护敏感信息，本项目已采用环境变量方式管理 Dify 应用 URL。在添加新应用前，请先阅读 [安全部署指南](./security-deployment-guide.md)。
+
 ## 📋 如何快速添加新的 Dify 应用
 
-### 第一步：添加应用配置
+### 第一步：添加环境变量
+
+在 `.env` 文件中添加新的 Dify 应用 URL：
+
+```bash
+# 在 .env 文件中添加
+VITE_DIFY_YOUR_APP_URL=https://your-dify-domain.com/chatbot/YOUR_CHATBOT_ID
+```
+
+### 第二步：添加应用配置
 
 在 `src/config/difyApps.ts` 文件中的 `DIFY_APPS` 数组里添加新配置：
 
@@ -11,7 +23,7 @@
   id: 'your-app-id',              // 唯一标识符
   name: '应用显示名称',             // 在界面上显示的名称
   description: '应用描述',          // 简短描述
-  url: 'http://dify.unisudo.dev/chatbot/YOUR_CHATBOT_ID', // Dify 应用完整URL
+  url: import.meta.env.VITE_DIFY_YOUR_APP_URL || '', // 从环境变量获取
   category: 'hr',                  // 分类：'legal' | 'education' | 'hr' | 'programming'
   icon: 'MessageCircle',           // 图标名称（需要在 iconMap 中存在）
   color: 'from-purple-500 to-purple-600', // 渐变色
@@ -19,7 +31,7 @@
 }
 ```
 
-### 第二步：添加卡片数据
+### 第三步：添加卡片数据
 
 在 `src/data/chatFlowData.ts` 文件中的 `chatFlowItems` 数组里添加：
 
