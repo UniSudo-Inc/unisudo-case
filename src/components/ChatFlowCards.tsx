@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Scale, GraduationCap, Users, Code, FileText, BookOpen, UserCheck, Globe, ArrowRight, Sparkles, Info, X, CheckCircle, Clock } from 'lucide-react';
+import { Scale, GraduationCap, Users, Code, FileText, BookOpen, UserCheck, Globe, ArrowRight, Sparkles, Info, X, CheckCircle, Clock, MessageCircle } from 'lucide-react';
 import { chatFlowItems } from '../data/chatFlowData';
 
 interface ChatFlowCardsProps {
   selectedCategory: string;
-  onTryDemo?: (demoType: 'contract' | 'lesson') => void;
+  onTryDemo?: (demoType: 'contract' | 'lesson' | 'hr-new', difyUrl?: string) => void;
 }
 
 const iconMap = {
@@ -16,6 +16,7 @@ const iconMap = {
   BookOpen,
   UserCheck,
   Globe,
+  MessageCircle,
 };
 
 const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDemo }) => {
@@ -28,7 +29,12 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
   const handleTryNow = (item: any) => {
     console.log('handleTryNow被调用了！');
     if (item.difyType && onTryDemo) {
-      onTryDemo(item.difyType);
+      // 如果有自定义 URL，传递给 onTryDemo
+      if (item.difyUrl) {
+        onTryDemo(item.difyType, item.difyUrl);
+      } else {
+        onTryDemo(item.difyType);
+      }
     } else {
       alert('该功能即将上线，敬请期待！');
     }

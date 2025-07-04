@@ -8,7 +8,8 @@ export interface ChatFlowItem {
   efficiency: string;
   color: string;
   gradient: string;
-  difyType?: 'contract' | 'lesson';
+  difyType?: 'contract' | 'lesson' | 'hr-new'; // 添加新的类型
+  difyUrl?: string; // 添加直接的iframe URL支持
   detailDescription?: string;
   useCases?: string[];
   advantages?: string[];

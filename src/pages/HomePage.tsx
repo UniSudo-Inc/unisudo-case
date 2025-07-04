@@ -10,14 +10,19 @@ const HomePage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('legal');
   const demoSectionRef = useRef<HTMLDivElement>(null);
 
-  const handleTryDemo = (demoType: 'contract' | 'lesson') => {
+  const handleTryDemo = (demoType: 'contract' | 'lesson' | 'hr-new', difyUrl?: string) => {
     // Scroll to demo section
     if (demoSectionRef.current) {
       demoSectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
     
     // Trigger demo opening (this will be handled by DemoSection component)
-    const event = new CustomEvent('openDemo', { detail: { demoType } });
+    const event = new CustomEvent('openDemo', { 
+      detail: { 
+        demoType,
+        difyUrl: difyUrl || undefined 
+      } 
+    });
     globalThis.dispatchEvent(event);
   };
 

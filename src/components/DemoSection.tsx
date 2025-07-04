@@ -1,40 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, FileText, GraduationCap, X, Maximize2, Minimize2, Play } from 'lucide-react';
+import { Sparkles, FileText, GraduationCap, X, Maximize2, Minimize2, Play, MessageCircle } from 'lucide-react';
+import { DIFY_APPS } from '../config/difyApps';
 
 const DemoSection: React.FC = () => {
-  const [activeDemo, setActiveDemo] = useState<'contract' | 'lesson' | null>(null);
+  const [activeDemo, setActiveDemo] = useState<'contract' | 'lesson' | 'hr-new' | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [customDifyUrl, setCustomDifyUrl] = useState<string | null>(null);
 
-  const demos = [
-    {
-      id: 'contract' as const,
-      title: '合同审查助手',
-      description: '智能分析合同条款，识别风险点',
-      icon: FileText,
-      color: 'from-blue-500 to-blue-600',
-      iframeSrc: 'https://dify.unisudo.dev/chatbot/bdXC48eHbO9Kt8Nj',
-      features: ['智能风险识别', '专业法律建议', '条款智能解析', '合规性检查']
-    },
-    {
-      id: 'lesson' as const,
-      title: '教案生成助手',
-      description: '智能生成个性化教学方案',
-      icon: GraduationCap,
-      color: 'from-green-500 to-green-600',
-      iframeSrc: 'https://dify.unisudo.dev/chatbot/ocE7DTea2ULZmZsx',
-      features: ['个性化教案设计', '教学目标规划', '互动环节设计', '评估方案生成']
-    }
-  ];
+  // 图标映射
+  const iconMap = {
+    FileText,
+    GraduationCap,
+    MessageCircle,
+  };
 
-  const activeConfig = demos.find(demo => demo.id === activeDemo);
+  // 根据配置文件生成 demos
+  const demos = DIFY_APPS.map(app => ({
+    id: app.id as 'contract' | 'lesson' | 'hr-new',
+    title: app.name,
+    description: app.description,
+    icon: iconMap[app.icon as keyof typeof iconMap] || MessageCircle,
+    color: app.color || 'from-gray-500 to-gray-600',
+    iframeSrc: app.url,
+    features: app.features || []
+  }));
 
-  const openDemo = (demoId: 'contract' | 'lesson') => {
+  // 如果有自定义URL，使用自定义配置，否则从配置文件中查找
+  const activeConfig = customDifyUrl ? {
+    id: activeDemo,
+    title: activeDemo === 'hr-new' ? 'HR智能客服' : '自定义应用',
+    description: '智能AI助手服务',
+    icon: MessageCircle,
+    color: 'from-purple-500 to-purple-600',
+    iframeSrc: customDifyUrl,
+    features: ['智能对话', '专业服务', '即时响应', '高效解决']
+  } : demos.find(demo => demo.id === activeDemo);
+
+  const openDemo = (demoId: 'contract' | 'lesson' | 'hr-new', customUrl?: string) => {
     setActiveDemo(demoId);
+    if (customUrl) {
+      setCustomDifyUrl(customUrl);
+    } else {
+      setCustomDifyUrl(null);
+    }
   };
 
   const closeDemo = () => {
     setActiveDemo(null);
     setIsFullscreen(false);
+    setCustomDifyUrl(null);
   };
 
   const toggleFullscreen = () => {
@@ -44,8 +58,8 @@ const DemoSection: React.FC = () => {
   // Listen for external demo opening events
   useEffect(() => {
     const handleOpenDemo = (event: CustomEvent) => {
-      const { demoType } = event.detail;
-      openDemo(demoType);
+      const { demoType, difyUrl } = event.detail;
+      openDemo(demoType, difyUrl);
     };
 
     globalThis.addEventListener('openDemo', handleOpenDemo as EventListener);

@@ -95,6 +95,22 @@ export const chatFlowItems: ChatFlowItem[] = [
     advantages: ['智能匹配', '减少偏见', '提高效率', '优化体验']
   },
   {
+    id: 'hr-chatbot',
+    name: 'HR智能客服',
+    description: '24/7在线HR咨询服务，解答员工各类人事问题',
+    icon: 'MessageCircle',
+    category: 'hr',
+    features: ['政策咨询', '流程指导', '问题解答', '服务预约'],
+    efficiency: '提升90%效率',
+    color: 'text-purple-600',
+    gradient: 'from-purple-600 to-purple-700',
+    difyType: 'hr-new',
+    difyUrl: 'http://dify.unisudo.dev/chatbot/Vq8Ehn4qLGGOBjMY',
+    detailDescription: '智能HR客服系统，能够快速回答员工关于薪资、福利、政策等各类人事问题，提供24/7不间断服务。',
+    useCases: ['员工政策咨询', '流程指导', '福利查询', '请假申请指导'],
+    advantages: ['24/7在线服务', '即时响应', '准确信息', '减轻HR工作负担']
+  },
+  {
     id: 'code-assistant',
     name: '编程助手',
     description: '代码生成、调试、优化建议 - 敬请期待',
