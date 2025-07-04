@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
     
     // Trigger demo opening (this will be handled by DemoSection component)
     const event = new CustomEvent('openDemo', { detail: { demoType } });
-    window.dispatchEvent(event);
+    globalThis.dispatchEvent(event);
   };
 
   return (

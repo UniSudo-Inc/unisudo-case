@@ -48,9 +48,9 @@ const DemoSection: React.FC = () => {
       openDemo(demoType);
     };
 
-    window.addEventListener('openDemo', handleOpenDemo as EventListener);
+    globalThis.addEventListener('openDemo', handleOpenDemo as EventListener);
     return () => {
-      window.removeEventListener('openDemo', handleOpenDemo as EventListener);
+      globalThis.removeEventListener('openDemo', handleOpenDemo as EventListener);
     };
   }, []);
 

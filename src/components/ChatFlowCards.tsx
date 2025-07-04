@@ -26,8 +26,7 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
   );
 
   const handleTryNow = (item: any) => {
-    console.log('Button clicked for item:', item.name, 'difyType:', item.difyType, 'onTryDemo:', !!onTryDemo);
-    
+    console.log('handleTryNow被调用了！');
     if (item.difyType && onTryDemo) {
       onTryDemo(item.difyType);
     } else {
@@ -70,9 +69,10 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
                 <div
                   key={item.id}
                   className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 border border-gray-100 overflow-hidden relative"
+                  style={{ position: 'relative', zIndex: 1 }}
                 >
                   {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} style={{ zIndex: -1 }} />
                   
                   {/* Status Badge */}
                   <div className="absolute top-6 right-6">
@@ -127,8 +127,20 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
                   {/* Actions */}
                   <div className="flex space-x-4">
                     <button 
-                      onClick={() => handleTryNow(item)}
-                      disabled={!hasIntegration && !isComingSoon}
+                      type="button"
+                      onClick={(e) => {
+                        console.log('按钮点击事件触发！');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleTryNow(item);
+                      }}
+                      onMouseEnter={() => console.log('鼠标进入按钮')}
+                      disabled={false}
+                      style={{
+                        position: 'relative',
+                        zIndex: 9999,
+                        pointerEvents: 'auto'
+                      }}
                       className={`flex-1 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-2 ${
                         hasIntegration 
                           ? `bg-gradient-to-r ${item.gradient} hover:shadow-xl hover:scale-105 cursor-pointer`
@@ -141,6 +153,7 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
                       <ArrowRight className="w-5 h-5" />
                     </button>
                     <button 
+                      type="button"
                       onClick={() => handleShowDetails(item)}
                       className="px-6 py-4 border-2 border-gray-300 rounded-2xl text-gray-700 font-bold text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-lg flex items-center space-x-2"
                     >
@@ -170,6 +183,7 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
             {/* Modal Header */}
             <div className={`bg-gradient-to-r ${selectedItem.gradient} p-8 text-white relative`}>
               <button
+                type="button"
                 onClick={closeModal}
                 className="absolute top-6 right-6 text-white hover:bg-white/20 rounded-full p-3 transition-colors"
               >
@@ -274,7 +288,10 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
               {/* Action Buttons */}
               <div className="flex space-x-4 pt-4">
                 <button 
-                  onClick={() => {
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     closeModal();
                     handleTryNow(selectedItem);
                   }}
@@ -286,6 +303,7 @@ const ChatFlowCards: React.FC<ChatFlowCardsProps> = ({ selectedCategory, onTryDe
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button 
+                  type="button"
                   onClick={closeModal}
                   className="px-8 py-4 border-2 border-gray-300 rounded-2xl text-gray-700 font-bold hover:bg-gray-50 transition-all duration-300"
                 >
